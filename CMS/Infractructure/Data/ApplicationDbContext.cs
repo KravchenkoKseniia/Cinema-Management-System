@@ -52,15 +52,11 @@ public class ApplicationDbContext : DbContext
             .HasOne(t => t.Payment)
             .WithMany()
             .HasForeignKey(t => t.PaymentId);
+	
+		modelBuilder.Entity<Role>().HasData(
+     		new Role { RoleId = 1, RoleName = "Admin" },
+     		new Role { RoleId = 2, RoleName = "User" }
+ 		);
     }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Role>().HasData(
-            new Role { RoleId = 1, RoleName = "Admin" },
-            new Role { RoleId = 2, RoleName = "User" }
-        );
-    }
 }
