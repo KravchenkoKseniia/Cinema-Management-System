@@ -1,10 +1,10 @@
-namespace CMS.Models;
+using CMS.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : DbContext
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+namespace CMS.Infractructure.Data;
 
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+{
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Genre> Genres { get; set; } = null!;
@@ -58,5 +58,4 @@ public class ApplicationDbContext : DbContext
      		new Role { RoleId = 2, RoleName = "User" }
  		);
     }
-    
 }

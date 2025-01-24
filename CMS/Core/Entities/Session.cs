@@ -1,4 +1,4 @@
-namespace CMS.Models;
+namespace CMS.Core.Entities;
 
 public class Session
 {
