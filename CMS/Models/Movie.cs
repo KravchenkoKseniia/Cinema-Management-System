@@ -12,6 +12,6 @@ public class Movie
     public TimeSpan Duration { get; set; }
     public string PosterURL { get; set; } = null!;
 
-    public Genre Genre { get; set; } = null!;
+    public ICollection<Genre> Genre { get; set; } = new List<Genre>();
     public ICollection<Session> Sessions { get; set; } = new List<Session>();
 }
