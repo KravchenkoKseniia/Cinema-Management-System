@@ -1,4 +1,4 @@
-namespace CMS.Core.Entities;
+namespace CMS.Infrastructure.Entities;
 
 public class Hall
 {

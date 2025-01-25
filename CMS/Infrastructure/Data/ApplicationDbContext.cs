@@ -1,7 +1,7 @@
-using CMS.Core.Entities;
+using CMS.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CMS.Infractructure.Data;
+namespace CMS.Infrastructure.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
