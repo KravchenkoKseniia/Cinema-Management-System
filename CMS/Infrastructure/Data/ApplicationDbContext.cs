@@ -52,10 +52,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .HasOne(t => t.Payment)
             .WithMany()
             .HasForeignKey(t => t.PaymentId);
-	
-		modelBuilder.Entity<Role>().HasData(
-     		new Role { RoleId = 1, RoleName = "Admin" },
-     		new Role { RoleId = 2, RoleName = "User" }
- 		);
+        
+        // applyConfiguration from Configurations for each entity
+        // specifications for entities + interfaces
+            
+        modelBuilder.SeedRoles();
     }
 }
