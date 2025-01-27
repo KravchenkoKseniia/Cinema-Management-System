@@ -1,18 +1,18 @@
 using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using CMS.Infrastructure.Data;
-using CMS.Infrastructure.Entities;
+using CMS.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace CMS.Infrastructure.Repositories
 {
-    public class GenericRepository<TEntity>(ApplicationDbContext context)
+    public class GenericRepository<TEntity>(ApplicationDbContext context) : IGenericRepository<TEntity>
         where TEntity : class
     {
-        internal ApplicationDbContext Context = context;
-        internal DbSet<TEntity> DbSet = context.Set<TEntity>();
-        
+        internal readonly ApplicationDbContext Context = context;
+        internal readonly DbSet<TEntity> DbSet = context.Set<TEntity>();
+
         public virtual TEntity? GetById(int id)
         {
             return DbSet.Find(id);
