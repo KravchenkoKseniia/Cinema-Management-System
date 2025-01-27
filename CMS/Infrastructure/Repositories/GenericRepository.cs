@@ -13,23 +13,23 @@ namespace CMS.Infrastructure.Repositories
         internal readonly ApplicationDbContext Context = context;
         internal readonly DbSet<TEntity> DbSet = context.Set<TEntity>();
 
-        public virtual TEntity? GetById(int id)
+        public TEntity? GetById(int id)
         {
             return DbSet.Find(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public void Insert(TEntity entity)
         {
             DbSet.Add(entity);
         }
 
-        public virtual void Delete(int id)
+        public void Delete(int id)
         {
             TEntity? entityToDelete = DbSet.Find(id);
             if (entityToDelete != null) Delete(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public void Delete(TEntity entityToDelete)
         {
             if (Context.Entry(entityToDelete).State == EntityState.Detached)
             {
@@ -38,13 +38,13 @@ namespace CMS.Infrastructure.Repositories
             DbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public void Update(TEntity entityToUpdate)
         {
             DbSet.Attach(entityToUpdate);
             Context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public virtual void Save()
+        public void Save()
         {
             Context.SaveChanges();
         }
