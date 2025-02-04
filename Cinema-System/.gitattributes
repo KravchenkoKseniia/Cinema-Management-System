@@ -1,0 +1,29 @@
+# Normalize line endings for cross-platform compatibility
+* text=auto
+
+# Set default behavior to merge binary files (no automatic conflict resolution)
+*.dll binary
+*.exe binary
+*.pdb binary
+*.ico binary
+*.pdf binary
+*.jpg binary
+*.png binary
+*.gif binary
+*.mp4 binary
+
+# Treat C# and project files as text
+*.cs diff=csharp
+*.csproj text
+*.sln text
+*.json text
+*.xml text
+*.config text
+*.sql text
+
+# Ignore Rider and Visual Studio IDE-specific files
+.idea/ export-ignore
+.vs/ export-ignore
+bin/ export-ignore
+obj/ export-ignore
+*.user export-ignore

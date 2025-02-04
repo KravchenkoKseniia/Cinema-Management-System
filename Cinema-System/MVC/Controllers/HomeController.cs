@@ -1,8 +1,9 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using CMS.Models;
+using Microsoft.Extensions.Logging;
+using MVC.Models;
+using System.Diagnostics;
 
-namespace CMS.Controllers;
+namespace MVC.Controllers;
 
 public class HomeController : Controller
 {
