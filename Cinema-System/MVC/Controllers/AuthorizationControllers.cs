@@ -1,7 +1,7 @@
+using Cinema_System.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Entities;
-using Core.DTOs;
 
 namespace MVC.Controllers;
 
@@ -37,7 +37,10 @@ public class AuthorizationControllers : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDTO model)
     {
-        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+        var user = await _userManager.FindByNameAsync(model.UserName);
+        if (user == null)
+            return Unauthorized("Invalid login attempt");
+        var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
         if (!result.Succeeded)
             return Unauthorized("Invalid login attempt");
 
