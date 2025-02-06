@@ -8,8 +8,8 @@ namespace Cinema_System.Validators
         public MovieValidator()
         {
             RuleFor(m => m.Title)
-                .NotNull().WithMessage("Title is required")   // Ensure it's not null
-                .NotEmpty().WithMessage("Title cannot be empty")  // Ensure it's not an empty string
+                .NotNull().WithMessage("Title is required")
+                .NotEmpty().WithMessage("Title cannot be empty")
                 .MaximumLength(100).WithMessage("Title cannot exceed 100 characters");
 
             RuleFor(m => m.Description)

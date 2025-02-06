@@ -18,6 +18,7 @@ namespace Cinema_System.Validators
                 .GreaterThan(s => s.StartTime).WithMessage("End time must be after end time");
 
             RuleFor(s => s.Date)
+                .NotNull().WithMessage("Date of session ")
                 .GreaterThanOrEqualTo(DateTime.Today).WithMessage("Session date cannot be in the past");
 
             RuleFor(s => s.HallId)
@@ -25,7 +26,8 @@ namespace Cinema_System.Validators
                 .GreaterThan(0).WithMessage("Hall ID must be greater than 0");
 
             RuleFor(s => s.HallName)
-                .NotEmpty().WithMessage("Hall name is required");
+                .NotEmpty().WithMessage("Hall name is required")
+                .Matches(@"^[A-Za-z\s]+$").WithMessage("Hall name must contain only letters and spaces.");
 
             RuleFor(s => s.TicketPrice)
                 .NotNull().WithMessage("Price is required")
