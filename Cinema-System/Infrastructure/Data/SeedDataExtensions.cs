@@ -38,13 +38,5 @@ namespace Infrastructure.Data
                 new Hall { HallId = 3, Name = "Hall 3", Capacity = 200 }
             );
         }
-
-        public static void SeedRoles(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Role>().HasData(
-                new Role { RoleId = 1, RoleName = "Admin" },
-                new Role { RoleId = 2, RoleName = "User" }
-            );
-        } // TODO: replace SeedRoles with Identity
     }
-} // sessions, tickets, payments, users will be added dynamically
+}

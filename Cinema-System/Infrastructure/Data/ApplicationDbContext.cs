@@ -21,8 +21,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             
         modelBuilder.SeedGenres();
         modelBuilder.SeedHalls();
-        modelBuilder.SeedMovies();
-        modelBuilder.SeedRoles();
     }
     
     public virtual DbSet<Role> Roles { get; set; } = null!;
