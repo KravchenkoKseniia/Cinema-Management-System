@@ -10,6 +10,8 @@ public class MovieDTO
     public decimal Rating { get; set; }
     public TimeSpan Duration { get; set; }
     public string PosterURL { get; set; } = null!;
-    public int GenreId { get; set; }
-    public string GenreName { get; set; } = null!;
+    
+    public List<int> GenreIds { get; set; } = new List<int>();
+
+    public List<string> GenreNames { get; set; } = new List<string>();
 }
