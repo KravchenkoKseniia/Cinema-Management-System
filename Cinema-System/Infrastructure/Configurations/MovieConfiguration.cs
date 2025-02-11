@@ -17,10 +17,10 @@ namespace Infrastructure.Configurations
             builder.Property(m => m.Duration).IsRequired();
             builder.Property(m => m.PosterURL).IsRequired();
             
-            builder.HasOne(m => m.Genre)
+            builder
+                .HasMany(m => m.Genres)
                 .WithMany(g => g.Movies)
-                .HasForeignKey(m => m.GenreId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .UsingEntity(j => j.ToTable("MovieGenres"));
         }
     }
 }
