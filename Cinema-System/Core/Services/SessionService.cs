@@ -3,10 +3,11 @@ using Cinema_System.DTOs;
 using Infrastructure.Entities;
 using Infrastructure.Entities.Specifications;
 using Infrastructure.Interfaces;
+using Cinema_System.Services.Interfaces;
 
 namespace Cinema_System.Services
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

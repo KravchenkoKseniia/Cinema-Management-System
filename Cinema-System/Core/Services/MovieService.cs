@@ -1,11 +1,12 @@
 using AutoMapper;
 using Cinema_System.DTOs;
+using Cinema_System.Services.Interfaces;
 using Infrastructure.Entities;
 using Infrastructure.Interfaces;
 
 namespace Cinema_System.Services
 {
-    public class MovieService
+    public class MovieService: IMovieService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
