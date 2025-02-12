@@ -15,9 +15,9 @@ namespace Infrastructure.Repositories
             _apiKey = configuration["TMDb:ApiKey"] ?? throw new ArgumentNullException("API key is missing!");
         }
 
-        public async Task<T?> FetchFromTmdbAsync<T>(string relativePath)
+        public async Task<T?> FetchFromTmdbAsync<T>(string path)
         {
-            var url = $"https://api.themoviedb.org/3/{relativePath}&api_key={_apiKey}";
+            var url = $"{path}&api_key={_apiKey}";
             return await _httpClient.GetFromJsonAsync<T>(url);
         }
     }

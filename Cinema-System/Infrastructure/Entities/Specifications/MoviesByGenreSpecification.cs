@@ -6,6 +6,6 @@ public sealed class MoviesByGenreSpecification : Specification<Movie>
 {
     public MoviesByGenreSpecification(int genreId)
     {
-        Query.Where(m => m.GenreId == genreId).Include(m => m.Genre);
+        Query.Where(m => m.Genres.Any(g => g.GenreId == genreId)).Include(m => m.Genres);
     }
 }
