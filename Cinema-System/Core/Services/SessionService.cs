@@ -16,6 +16,12 @@ namespace Cinema_System.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        
+        public IEnumerable<SessionDTO> GetAllSessions()
+        {
+            var sessions = _unitOfWork.Sessions.GetAll();
+            return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
+        }
 
         public IEnumerable<SessionDTO> GetSessionsByMovieAndDate(int movieId, DateTime date)
         {
