@@ -1,13 +1,16 @@
+/*
+using Cinema_System.Services;
 using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Cinema_System.Services;
 namespace MVC.Controllers;
 
 [Route("api/movies")]
 [ApiController]
 public class MoviesController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly MovieService _service;
 
     public MoviesController(ApplicationDbContext context)
     {
@@ -21,3 +24,4 @@ public class MoviesController : ControllerBase
         return Ok(movies);
     }
 }
+*/
