@@ -30,6 +30,13 @@ namespace Cinema_System.Services
             var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
             return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
         }
+        
+        public IEnumerable<SessionDTO> GetSessionsByMovie(int movieId)
+        {
+            var specification = new SessionsByMovieSpecification(movieId);
+            var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
+            return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
+        }
 
         public SessionDTO? GetSessionById(int sessionId)
         {
