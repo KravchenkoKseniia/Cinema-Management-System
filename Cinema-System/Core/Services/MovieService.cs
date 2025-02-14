@@ -1,11 +1,12 @@
 using AutoMapper;
 using Cinema_System.DTOs;
+using Cinema_System.Services.Interfaces;
 using Infrastructure.Entities;
 using Infrastructure.Interfaces;
 
 namespace Cinema_System.Services
 {
-    public class MovieService
+    public class MovieService: IMovieService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -16,7 +17,11 @@ namespace Cinema_System.Services
             _mapper = mapper;
         }
 
-        //public IEnumerable<MovieDTO> GetAllMovies()
+        public IEnumerable<MovieDTO> GetAllMovies()
+        {
+            var movies = _unitOfWork.Movies.GetAll();
+            return _mapper.Map<IEnumerable<MovieDTO>>(movies);
+        }
 
         public MovieDTO? GetMovieById(int id)
         {

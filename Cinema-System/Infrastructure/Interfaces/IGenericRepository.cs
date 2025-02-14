@@ -4,6 +4,7 @@ namespace Infrastructure.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
+        IEnumerable<TEntity> GetAll();
         TEntity? GetById(int id);
         void Insert(TEntity entity);
         void Delete(int id);

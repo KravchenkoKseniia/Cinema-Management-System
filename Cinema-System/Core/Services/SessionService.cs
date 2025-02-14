@@ -3,10 +3,11 @@ using Cinema_System.DTOs;
 using Infrastructure.Entities;
 using Infrastructure.Entities.Specifications;
 using Infrastructure.Interfaces;
+using Cinema_System.Services.Interfaces;
 
 namespace Cinema_System.Services
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -16,10 +17,23 @@ namespace Cinema_System.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        
+        public IEnumerable<SessionDTO> GetAllSessions()
+        {
+            var sessions = _unitOfWork.Sessions.GetAll();
+            return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
+        }
 
         public IEnumerable<SessionDTO> GetSessionsByMovieAndDate(int movieId, DateTime date)
         {
             var specification = new SessionsByMovieAndDataSpecification(movieId, date);
+            var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
+            return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
+        }
+        
+        public IEnumerable<SessionDTO> GetSessionsByMovie(int movieId)
+        {
+            var specification = new SessionsByMovieSpecification(movieId);
             var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
             return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
         }

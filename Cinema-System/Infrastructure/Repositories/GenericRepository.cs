@@ -11,7 +11,10 @@ namespace Infrastructure.Repositories
     {
         internal readonly ApplicationDbContext Context = context;
         internal readonly DbSet<TEntity> DbSet = context.Set<TEntity>();
-
+        public IEnumerable<TEntity> GetAll()
+        {
+            return DbSet.ToList();
+        }
         public TEntity? GetById(int id)
         {
             return DbSet.Find(id);
