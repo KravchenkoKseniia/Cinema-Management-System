@@ -18,10 +18,10 @@ public class MovieSearchItem
     public string Overview { get; set; } = null!;
     
     [JsonPropertyName("release_date")]
-    public DateTime? ReleaseDate { get; set; } = null!;
+    public DateTime ReleaseDate { get; set; }
     
     [JsonPropertyName("vote_average")]
-    public double VoteAverage { get; set; }
+    public decimal VoteAverage { get; set; }
     
     [JsonPropertyName("runtime")]
     public TimeSpan Runtime { get; set; }
@@ -31,7 +31,6 @@ public class MovieSearchItem
     
     [JsonPropertyName("genres")]
     public List<TmdbGenre> Genres { get; set; } = new List<TmdbGenre>();
-
     
     [JsonPropertyName("genre_ids")]
     public List<int> GenreIdsFromIds { get; set; } = new List<int>();
@@ -48,4 +47,20 @@ public class TmdbGenre
 
     [JsonPropertyName("name")]
     public string Name { get; set; } = null!;
+}
+
+
+public class MovieTrailerResult
+{
+    [JsonPropertyName("results")]
+    public List<MovieTrailerItem> Results { get; set; } = new();
+}
+
+public class MovieTrailerItem
+{
+    [JsonPropertyName("key")] public string Key { get; set; } = null!;
+
+    [JsonPropertyName("site")] public string Site { get; set; } = null!;
+
+    [JsonPropertyName("type")] public string Type { get; set; } = null!;
 }
