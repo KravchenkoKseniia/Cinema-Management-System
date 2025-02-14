@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Cinema_System.Services.Interfaces;
+using Infrastructure.Entities;
 
 namespace MVC.Controllers;
 
@@ -8,17 +8,41 @@ namespace MVC.Controllers;
 [ApiController]
 public class GenresController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IGenreService _genreService;
 
-    public GenresController(ApplicationDbContext context)
+    public GenresController(IGenreService genreService)
     {
-        _context = context;
+        _genreService = genreService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetGenres()
     {
-        var genres = await _context.Genres.ToListAsync();
+        var genres = await _genreService.GetGenresAsync();
         return Ok(genres);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetGenreById(int id)
+    {
+        var genre = await _genreService.GetGenreByIdAsync(id);
+        if (genre == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(genre);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddGenre([FromBody] Genre genre)
+    {
+        if (genre == null)
+        {
+            return BadRequest("Invalid genre data");
+        }
+
+        await _genreService.AddGenreAsync(genre);
+        return CreatedAtAction(nameof(GetGenreById), new { id = genre.Id }, genre);
     }
 }
