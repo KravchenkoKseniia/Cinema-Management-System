@@ -16,7 +16,7 @@ public class AuthorizationControllerUI : Controller
     [HttpGet]
     public IActionResult Login()
     {
-        return View();
+        return View(); //Returns Views/Authorization/Login.cshtml
     }
 
     [HttpPost]
@@ -30,13 +30,13 @@ public class AuthorizationControllerUI : Controller
             return RedirectToAction("Index", "Home");
 
         ModelState.AddModelError("", "Invalid username or password.");
-        return View(model);
+        return View(model); //Returns Views/Authorization/Login.cshtml
     }
 
     [HttpGet]
     public IActionResult Register()
     {
-        return View();
+        return View(); //Returns Views/Authorization/Register.cshtml
     }
 
     [HttpPost]
