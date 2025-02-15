@@ -1,23 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-namespace MVC.Controllers;
+using Cinema_System.Services.Interfaces;
 
-[Route("api/roles")]
-[ApiController]
-public class RolesController : ControllerBase
+namespace MVC.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public RolesController(ApplicationDbContext context)
+    [Route("api/roles")]
+    [ApiController]
+    public class RolesController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly IRoleService _roleService;
 
-    [HttpGet]
-    public async Task<IActionResult> GetRoles()
-    {
-        var roles = await _context.Roles.ToListAsync();
-        return Ok(roles);
+        public RolesController(IRoleService roleService)
+        {
+            _roleService = roleService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _roleService.GetRolesAsync();
+            return Ok(roles);
+        }
     }
 }

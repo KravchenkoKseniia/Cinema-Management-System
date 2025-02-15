@@ -1,34 +1,49 @@
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Cinema_System.Services.Interfaces;
+using Infrastructure.Entities;
 namespace MVC.ControllersUI;
 
 public class GenresUIController : Controller
 {
-    /*private readonly ApplicationDbContext _context;
+    private readonly IGenreService _genreService;
     
-    public GenresUIController(ApplicationDbContext context)
+    public GenresUIController(IGenreService genreService)
     {
-        _context = context;
-    }*/
+        _genreService = genreService;
+    }
     
-    /*[HttpGet]
-    public async Task<IActionResult> GetGenres()
+    public async Task<IActionResult> Index()
     {
-        var genres = await _context.Genres.ToListAsync();
-        return View(genres);
+        var genres = await _genreService.GetGenresAsync();
+        return View(genres); //Returns Views/Genres/Index.cshtml
+    }
+    
+    public async Task<IActionResult> Details(int id)
+    {
+        var genre = await _genreService.GetGenreByIdAsync(id);
+        if (genre == null)
+        {
+            return NotFound();
+        }
+        
+        return View(genre); //Returns Views/Genres/Details.cshtml
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetGenresById(int id)
+    public IActionResult Create()
     {
-        var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == id);
-        return View(genre);
+        return View(); //Returns Views/Genres/Create.cshtml
     }
     
-    [HttpGet]
-    public IActionResult CreateGenre()
+    [HttpPost]
+    public async Task<IActionResult> Create(Genre genre)
     {
-        return View();
-    }*/
+        if (ModelState.IsValid)
+        {
+            await _genreService.AddGenreAsync(genre);
+            return RedirectToAction(nameof(Index));
+        }
+        
+        return View(genre); 
+    }
 }

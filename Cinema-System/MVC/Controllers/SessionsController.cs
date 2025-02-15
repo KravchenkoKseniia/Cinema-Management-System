@@ -1,23 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Cinema_System.Services.Interfaces;
+using Cinema_System.DTOs;
 namespace MVC.Controllers;
 
 [Route("api/sessions")]
 [ApiController]
-public class SessionsController : ControllerBase
+public class SessionController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
-
-    public SessionsController(ApplicationDbContext context)
+    private readonly ISessionService _sessionService;
+    
+    public SessionController(ISessionService sessionService)
     {
-        _context = context;
+        _sessionService = sessionService;
     }
-
+    
     [HttpGet]
-    public async Task<IActionResult> GetSessions()
+    public IActionResult GetAllSessions()
     {
-        var sessions = await _context.Sessions.Include(s => s.Movie).ToListAsync();
-        return Ok(sessions);
+        return Ok(_sessionService.GetAllSessions());
+    }
+    
+    [HttpGet("{id}")]
+    public IActionResult GetSessionById(int id)
+    {
+        var session = _sessionService.GetSessionById(id);
+        return session != null ? Ok(session) : NotFound();
+    }
+    
+    [HttpPost]
+    public IActionResult CreateSession([FromBody] SessionDTO sessionDto)
+    {
+        _sessionService.CreateSession(sessionDto);
+        return CreatedAtAction(nameof(GetSessionById), new { id = sessionDto.SessionId }, sessionDto);
     }
 }

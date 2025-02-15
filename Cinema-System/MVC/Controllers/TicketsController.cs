@@ -1,23 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Infrastructure.Data;
+using Cinema_System.Services.Interfaces;
+using Cinema_System.DTOs;
 namespace MVC.Controllers;
 
 [Route("api/tickets")]
 [ApiController]
-public class TicketsController : ControllerBase
+public class TicketController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
-
-    public TicketsController(ApplicationDbContext context)
+    private readonly ITicketService _ticketService;
+    
+    public TicketController(ITicketService ticketService)
     {
-        _context = context;
+        _ticketService = ticketService;
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GetTickets()
+    
+    [HttpGet("user/{userId}")]
+    public IActionResult GetTicketsByUser(int userId)
     {
-        var tickets = await _context.Tickets.ToListAsync();
-        return Ok(tickets);
+        return Ok(_ticketService.GetTicketsByUser(userId));
+    }
+    
+    [HttpPost]
+    public IActionResult BookTicket([FromBody] TicketDTO ticketDto)
+    {
+        _ticketService.BookTicket(ticketDto);
+        return Ok(new { message = "Ticket booked successfully" });
     }
 }

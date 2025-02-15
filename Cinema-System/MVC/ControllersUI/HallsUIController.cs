@@ -1,3 +1,5 @@
+using Cinema_System.Services;
+using Cinema_System.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -5,30 +7,27 @@ namespace MVC.ControllersUI;
 
 public class HallsUIController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IHallService _hallService;
     
-    public HallsUIController(ApplicationDbContext context)
+    public HallsUIController(IHallService hallService)
     {
-        _context = context;
+        _hallService = hallService;
     }
     
-    [HttpGet]
-    public async Task<IActionResult> GetHalls()
+    public async Task<IActionResult> Index()
     {
-        var halls = await _context.Halls.ToListAsync();
-        return View(halls);
+        var halls = await _hallService.GetAllHallsAsync();
+        return View(halls); //Returns Views/Halls/Index.cshtml
     }
     
-    [HttpGet]
-    public async Task<IActionResult> GetHallsById(int id)
+    public async Task<IActionResult> Details(int id)
     {
-        var hall = await _context.Halls.FirstOrDefaultAsync(x => x.Id == id);
-        return View(hall);
+        var hall = await _hallService.GetHallByIdAsync(id);
+        if (hall == null)
+        {
+            return NotFound();
+        }
+        
+        return View(hall); //Returns Views/Halls/Details.cshtml
     }
-    
-    [HttpGet]
-    public IActionResult CreateHall()
-    {
-        return View();
-    }   
 }

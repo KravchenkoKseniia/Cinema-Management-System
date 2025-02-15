@@ -1,23 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Interfaces;
+using Cinema_System.Services;
+
 namespace MVC.Controllers;
 
 [Route("api/halls")]
 [ApiController]
 public class HallsController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly HallService _hallService;
 
-    public HallsController(ApplicationDbContext context)
+    public HallsController(HallService hallService)
     {
-        _context = context;
+        _hallService = hallService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetHalls()
     {
-        var halls = await _context.Halls.ToListAsync();
+        var halls = await _hallService.GetAllHallsAsync();
         return Ok(halls);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetHallById(int id)
+    {
+        var hall = await _hallService.GetHallByIdAsync(id);
+        if (hall == null)
+        {
+            return NotFound();
+        }
+        return Ok(hall);
     }
 }
