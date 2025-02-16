@@ -20,7 +20,10 @@ builder.Services.AddControllersWithViews();
 
 // Register the DbContext with a connection string from configuration.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    ));
 
 // Register Identity services BEFORE calling builder.Build()
 builder.Services.AddIdentity<User, Role>()
