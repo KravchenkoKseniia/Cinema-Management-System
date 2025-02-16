@@ -17,6 +17,10 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
     </ItemGroup>
 
@@ -27,6 +31,11 @@
       <_ContentIncludedByDefault Remove="Views\HallsUI\CreateHall.cshtml" />
       <_ContentIncludedByDefault Remove="Views\HallsUI\GetHalls.cshtml" />
       <_ContentIncludedByDefault Remove="Views\HallsUI\GetHallsById.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="appsettings.Development.json" />
+      <None Include="appsettings.json" />
     </ItemGroup>
 
 </Project>

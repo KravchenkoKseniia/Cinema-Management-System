@@ -22,7 +22,22 @@ namespace CMS.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Genre", b =>
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.Property<int>("GenresGenreId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MoviesMovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenresGenreId", "MoviesMovieId");
+
+                    b.HasIndex("MoviesMovieId");
+
+                    b.ToTable("MovieGenres", (string)null);
+                });
+
+            modelBuilder.Entity("Infrastructure.Entities.Genre", b =>
                 {
                     b.Property<int>("GenreId")
                         .ValueGeneratedOnAdd()
@@ -32,14 +47,134 @@ namespace CMS.Migrations
 
                     b.Property<string>("GenreName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.HasKey("GenreId");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            GenreId = 28,
+                            GenreName = "Action",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 12,
+                            GenreName = "Adventure",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 16,
+                            GenreName = "Animation",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 35,
+                            GenreName = "Comedy",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 80,
+                            GenreName = "Crime",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 99,
+                            GenreName = "Documentary",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 18,
+                            GenreName = "Drama",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 10751,
+                            GenreName = "Family",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 14,
+                            GenreName = "Fantasy",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 36,
+                            GenreName = "History",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 27,
+                            GenreName = "Horror",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 10402,
+                            GenreName = "Music",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 9648,
+                            GenreName = "Mystery",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 10749,
+                            GenreName = "Romance",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 878,
+                            GenreName = "Science Fiction",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 10770,
+                            GenreName = "TV Movie",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 53,
+                            GenreName = "Thriller",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 10752,
+                            GenreName = "War",
+                            Id = 0
+                        },
+                        new
+                        {
+                            GenreId = 37,
+                            GenreName = "Western",
+                            Id = 0
+                        });
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Hall", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Hall", b =>
                 {
                     b.Property<int>("HallId")
                         .ValueGeneratedOnAdd()
@@ -50,16 +185,43 @@ namespace CMS.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("HallId");
 
                     b.ToTable("Halls");
+
+                    b.HasData(
+                        new
+                        {
+                            HallId = 1,
+                            Capacity = 100,
+                            Id = 0,
+                            Name = "Hall 1"
+                        },
+                        new
+                        {
+                            HallId = 2,
+                            Capacity = 150,
+                            Id = 0,
+                            Name = "Hall 2"
+                        },
+                        new
+                        {
+                            HallId = 3,
+                            Capacity = 200,
+                            Id = 0,
+                            Name = "Hall 3"
+                        });
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Movie", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Movie", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
@@ -74,7 +236,7 @@ namespace CMS.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time(6)");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("PosterURL")
@@ -82,14 +244,16 @@ namespace CMS.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(3, 1)
+                        .HasColumnType("decimal(3,1)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("TrailerURL")
                         .IsRequired()
@@ -97,12 +261,10 @@ namespace CMS.Migrations
 
                     b.HasKey("MovieId");
 
-                    b.HasIndex("GenreId");
-
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Payment", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Payment", b =>
                 {
                     b.Property<int>("PaymentId")
                         .ValueGeneratedOnAdd()
@@ -111,10 +273,14 @@ namespace CMS.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("PaymentId"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -126,7 +292,7 @@ namespace CMS.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Role", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -134,28 +300,29 @@ namespace CMS.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("RoleId"));
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            RoleName = "Admin"
-                        },
-                        new
-                        {
-                            RoleId = 2,
-                            RoleName = "User"
-                        });
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Session", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Session", b =>
                 {
                     b.Property<int>("SessionId")
                         .ValueGeneratedOnAdd()
@@ -172,6 +339,9 @@ namespace CMS.Migrations
                     b.Property<int>("HallId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
@@ -179,7 +349,8 @@ namespace CMS.Migrations
                         .HasColumnType("time(6)");
 
                     b.Property<decimal>("TicketPrice")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("SessionId");
 
@@ -190,13 +361,16 @@ namespace CMS.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Ticket", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("TicketId"));
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
@@ -221,50 +395,103 @@ namespace CMS.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.User", b =>
+            modelBuilder.Entity("Infrastructure.Entities.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("UserId");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserId"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
-                    b.Property<string>("HashedPassword")
+                    b.Property<bool>("EmailConfirmed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("LockoutEnabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
+                    b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
-                    b.HasKey("UserId");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Movie", b =>
+            modelBuilder.Entity("GenreMovie", b =>
                 {
-                    b.HasOne("CMS.Infrastructure.Entities.Genre", "Genre")
-                        .WithMany("Movies")
-                        .HasForeignKey("GenreId")
+                    b.HasOne("Infrastructure.Entities.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresGenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Genre");
+                    b.HasOne("Infrastructure.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesMovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Payment", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Payment", b =>
                 {
-                    b.HasOne("CMS.Infrastructure.Entities.User", "User")
+                    b.HasOne("Infrastructure.Entities.User", "User")
                         .WithMany("Payments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -273,15 +500,15 @@ namespace CMS.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Session", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Session", b =>
                 {
-                    b.HasOne("CMS.Infrastructure.Entities.Hall", "Hall")
+                    b.HasOne("Infrastructure.Entities.Hall", "Hall")
                         .WithMany("Sessions")
                         .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CMS.Infrastructure.Entities.Movie", "Movie")
+                    b.HasOne("Infrastructure.Entities.Movie", "Movie")
                         .WithMany("Sessions")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,21 +519,21 @@ namespace CMS.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Ticket", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Ticket", b =>
                 {
-                    b.HasOne("CMS.Infrastructure.Entities.Payment", "Payment")
+                    b.HasOne("Infrastructure.Entities.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CMS.Infrastructure.Entities.Session", "Session")
+                    b.HasOne("Infrastructure.Entities.Session", "Session")
                         .WithMany("Tickets")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CMS.Infrastructure.Entities.User", "User")
+                    b.HasOne("Infrastructure.Entities.User", "User")
                         .WithMany("Tickets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -319,43 +546,38 @@ namespace CMS.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.User", b =>
+            modelBuilder.Entity("Infrastructure.Entities.User", b =>
                 {
-                    b.HasOne("CMS.Infrastructure.Entities.Role", "Role")
+                    b.HasOne("Infrastructure.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Genre", b =>
-                {
-                    b.Navigation("Movies");
-                });
-
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Hall", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Hall", b =>
                 {
                     b.Navigation("Sessions");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Movie", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Movie", b =>
                 {
                     b.Navigation("Sessions");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Role", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Role", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.Session", b =>
+            modelBuilder.Entity("Infrastructure.Entities.Session", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("CMS.Infrastructure.Entities.User", b =>
+            modelBuilder.Entity("Infrastructure.Entities.User", b =>
                 {
                     b.Navigation("Payments");
 
