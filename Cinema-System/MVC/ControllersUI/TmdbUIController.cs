@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace MVC.ControllersUI;
 
 [Route("tmdb")]
-public class TmdbControllerUI : Controller
+public class TmdbUIController : Controller
 {
     private readonly TmdbService _tmdbService;
 
-    public TmdbControllerUI(TmdbService tmdbService)
+    public TmdbUIController(TmdbService tmdbService)
     {
         _tmdbService = tmdbService;
     }

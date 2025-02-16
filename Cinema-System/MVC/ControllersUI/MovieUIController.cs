@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.ControllersUI;
 
-[Route("movies")]
-public class MovieControllerUI : Controller
+
+public class MovieUIController : Controller
 {
     private readonly IMovieService _movieService;
     
-    public MovieControllerUI(IMovieService movieService)
+    public MovieUIController(IMovieService movieService)
     {
         _movieService = movieService;
     }
