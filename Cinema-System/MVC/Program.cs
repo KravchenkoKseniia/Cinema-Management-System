@@ -12,10 +12,22 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// (Optional) Set the environment name early
+builder.Environment.EnvironmentName = "Development";
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Register IAuthenticationService
+// Register the DbContext with a connection string from configuration.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Identity services BEFORE calling builder.Build()
+builder.Services.AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// Register your custom services.
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>(); 
 builder.Services.AddScoped<IHallService, HallService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
@@ -23,18 +35,20 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
-
 builder.Services.AddScoped<IUserService, UserService>();
 
-var app = builder.Build();
-builder.Environment.EnvironmentName = "Development"; 
+// Register the Unit of Work implementation.
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Now build the app after all services have been registered.
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
