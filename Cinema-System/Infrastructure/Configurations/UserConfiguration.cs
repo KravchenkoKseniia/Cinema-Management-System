@@ -45,11 +45,11 @@ namespace Infrastructure.Configurations
                 .HasDefaultValue(0);
 
             // Map your custom properties
-            builder.Property(u => u.RoleId).IsRequired();
+            /*builder.Property(u => u.RoleId).IsRequired();
             builder.HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);*/
         }
     }
 }

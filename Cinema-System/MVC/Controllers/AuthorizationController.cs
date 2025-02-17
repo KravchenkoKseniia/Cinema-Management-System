@@ -18,7 +18,7 @@ public class AuthorizationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register([FromBody] RegisterDTO model)
     {
-        var result = _authService.Register(model.UserName, model.Password, "User");
+        var result = _authService.Register(model.UserName, model.Password, model.Email, "User");
         if (result != "Registration successful!")
             return BadRequest(result);
 

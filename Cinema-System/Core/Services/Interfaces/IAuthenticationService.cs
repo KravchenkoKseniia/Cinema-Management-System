@@ -8,7 +8,7 @@ namespace Cinema_System.Services.Interfaces
 {
     public interface IAuthenticationService
     {
-        string Register(string userName, string password, string role);
+        string Register(string userName, string password, string email, string role);
         string Login(string userName, string password);
         bool IsAdmin(int userId);
     }

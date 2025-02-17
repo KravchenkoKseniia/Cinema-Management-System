@@ -45,7 +45,7 @@ public class AuthorizationControllerUI : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        var result = _authService.Register(model.UserName, model.Password, "User");
+        var result = _authService.Register(model.UserName, model.Password, model.Email, "User");
         if (result == "Registration successful!")
             return RedirectToAction("Login");
 
