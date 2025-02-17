@@ -48,11 +48,11 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Now build the app after all services have been registered.
 var app = builder.Build();
 
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
     await SeedRolesAsync(roleManager);
-}*/
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -77,8 +77,14 @@ app.Run();
 // seeding method
 static async Task SeedRolesAsync(RoleManager<Role> roleManager)
 {
+    // For example:
     if (!await roleManager.RoleExistsAsync("User"))
     {
-        await roleManager.CreateAsync(new Role { Name = "User" });
+        await roleManager.CreateAsync(new Role { Name = "User", NormalizedName = "USER" });
+    }
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new Role { Name = "Admin", NormalizedName = "ADMIN" });
     }
 }
+

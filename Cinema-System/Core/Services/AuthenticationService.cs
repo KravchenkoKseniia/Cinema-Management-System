@@ -22,23 +22,20 @@ namespace Cinema_System.Services
         
         public string Register(string userName, string password, string email, string role)
         {
-            int roleId = role == "User" ? 2 : 1;
+            var roleEntity = _roleManager.FindByNameAsync(role).Result;
+            if (roleEntity == null)
+                return $"Role '{role}' does not exist!";
+            
             var user = new User
             {
                 UserName = userName,
-                Email = email, 
-                RoleId = roleId
+                Email = email,
+                RoleId = roleEntity.Id
             };
 
             var result = _userManager.CreateAsync(user, password).Result;
             if (result.Succeeded)
             {
-                // Automatically assign the "User" role
-                var addRoleResult = _userManager.AddToRoleAsync(user, role).Result;
-                if (!addRoleResult.Succeeded)
-                {
-                    return string.Join(", ", addRoleResult.Errors.Select(e => e.Description));
-                }
                 return "Registration successful!";
             }
 
