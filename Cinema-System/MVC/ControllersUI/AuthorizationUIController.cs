@@ -17,7 +17,7 @@ public class AuthorizationUIController : Controller
         _signInManager = signInManager;
     }
 
-    [HttpGet]
+    [HttpGet("login")]
     public IActionResult Login()
     {
         return View(); //Returns Views/Authorization/Login.cshtml
@@ -41,7 +41,7 @@ public class AuthorizationUIController : Controller
         return View(model); //Returns Views/Authorization/Login.cshtml
     }
 
-    [HttpGet]
+    [HttpGet("signup")]
     public IActionResult Register()
     {
         return View(); //Returns Views/Authorization/Register.cshtml
