@@ -9,20 +9,24 @@ namespace Infrastructure.Data
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            // Try to set the base path to the solution root (one directory up)
-            var basePath = Directory.GetCurrentDirectory();
-            if (!File.Exists(Path.Combine(basePath, "appsettings.json")))
+            // Start from the Infrastructure folder
+            // Move one directory up, then into "MVC"
+            var current = Directory.GetCurrentDirectory();
+            var mvcFolder = Path.Combine(current, "..", "MVC");
+
+            // If that still doesn't exist, try one more level up
+            if (!Directory.Exists(Path.Combine(mvcFolder)))
             {
-                basePath = Directory.GetParent(basePath)?.FullName;
+                mvcFolder = Path.Combine(current, "..", "..", "MVC");
             }
-            
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(basePath, "MVC"))
+
+            // Now load appsettings.json from the MVC folder
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(mvcFolder)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
