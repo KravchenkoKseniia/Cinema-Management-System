@@ -1,16 +1,20 @@
 using Cinema_System.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Cinema_System.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Infrastructure.Entities;
 
 namespace MVC.ControllersUI;
 
 public class AuthorizationUIController : Controller
 {
     private readonly IAuthenticationService _authService;
+    private readonly SignInManager<User> _signInManager;
 
-    public AuthorizationUIController(IAuthenticationService authService)
+    public AuthorizationUIController(IAuthenticationService authService, SignInManager<User> signInManager)
     {
         _authService = authService;
+        _signInManager = signInManager;
     }
 
     [HttpGet]
@@ -51,5 +55,12 @@ public class AuthorizationUIController : Controller
 
         ModelState.AddModelError("", result);
         return View(model);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }

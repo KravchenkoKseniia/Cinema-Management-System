@@ -1,12 +1,91 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model (MovieSearchResult? NowPlaying, MovieSearchResult? Upcoming, MovieSearchResult? SearchResults)
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<head>
+    <link rel="stylesheet" href="~/css/home.css" />
+</head>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Welcome to Cinema KSE</h1>
+
+    <form method="get" asp-controller="TmdbUI" asp-action="Search" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="title" class="form-control" placeholder="Search for a movie..." required />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    @if (Model.SearchResults?.Results != null && Model.SearchResults.Results.Any())
+    {
+        <h2>Search Results</h2>
+        <div class="row">
+            @foreach (var movie in Model.SearchResults.Results)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="https://image.tmdb.org/t/p/w500@movie.PosterPath" class="card-img-top" alt="@movie.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Rating:</strong> ⭐ @movie.VoteAverage</p>
+                            <a asp-controller="TmdbUI" asp-action="Details" asp-route-movieId="@movie.Id" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (Model.NowPlaying?.Results != null && Model.NowPlaying.Results.Any())
+    {
+        <h2 class="mt-4">Now Playing</h2>
+        <div class="row">
+            @foreach (var movie in Model.NowPlaying.Results)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="https://image.tmdb.org/t/p/w500@movie.PosterPath" class="card-img-top" alt="@movie.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Rating:</strong> ⭐ @movie.VoteAverage</p>
+                            <a asp-controller="TmdbUI" asp-action="Details" asp-route-movieId="@movie.Id" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No movies are currently playing.</p>
+    }
+
+    @if (Model.Upcoming?.Results != null && Model.Upcoming.Results.Any())
+    {
+        <h2 class="mt-4">Upcoming Movies</h2>
+        <div class="row">
+            @foreach (var movie in Model.Upcoming.Results)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="https://image.tmdb.org/t/p/w500@movie.PosterPath" class="card-img-top" alt="@movie.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Rating:</strong> ⭐ @movie.VoteAverage</p>
+                            <a asp-controller="TmdbUI" asp-action="Details" asp-route-movieId="@movie.Id" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No upcoming movies found.</p>
+    }
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
-}
