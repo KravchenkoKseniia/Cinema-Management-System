@@ -1,4 +1,4 @@
-﻿@model (MovieSearchResult? NowPlaying, MovieSearchResult? Upcoming, MovieSearchResult? SearchResults)
+﻿@model (Cinema_System.DTOs.MovieSearchResultDTO? NowPlaying, Cinema_System.DTOs.MovieSearchResultDTO? Upcoming, Cinema_System.DTOs.MovieSearchResultDTO? SearchResults)
 
 @{
     ViewData["Title"] = "Home";
@@ -29,7 +29,7 @@
                         <img src="https://image.tmdb.org/t/p/w500@movie.PosterPath" class="card-img-top" alt="@movie.Title">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
-                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate?.ToString("yyyy-MM-dd")</p>
                             <p class="card-text"><strong>Rating:</strong> ⭐ @movie.VoteAverage</p>
                             <a asp-controller="TmdbUI" asp-action="Details" asp-route-movieId="@movie.Id" class="btn btn-sm btn-primary">View Details</a>
                         </div>
@@ -50,7 +50,7 @@
                         <img src="https://image.tmdb.org/t/p/w500@movie.PosterPath" class="card-img-top" alt="@movie.Title">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
-                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate?.ToString("yyyy-MM-dd")</p>
                             <p class="card-text"><strong>Rating:</strong> ⭐ @movie.VoteAverage</p>
                             <a asp-controller="TmdbUI" asp-action="Details" asp-route-movieId="@movie.Id" class="btn btn-sm btn-primary">View Details</a>
                         </div>
@@ -75,7 +75,7 @@
                         <img src="https://image.tmdb.org/t/p/w500@movie.PosterPath" class="card-img-top" alt="@movie.Title">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
-                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Release Date:</strong> @movie.ReleaseDate?.ToString("yyyy-MM-dd")</p>
                             <p class="card-text"><strong>Rating:</strong> ⭐ @movie.VoteAverage</p>
                             <a asp-controller="TmdbUI" asp-action="Details" asp-route-movieId="@movie.Id" class="btn btn-sm btn-primary">View Details</a>
                         </div>
