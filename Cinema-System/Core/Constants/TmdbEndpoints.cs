@@ -9,11 +9,11 @@ public class TmdbEndpoints
     
     public static string SearchByTitleEndpoint(string title) => $"{BaseApiUrl}search/movie?query={title}";
     public static string DetailsByIdEndpoint(int movieId) => $"{BaseApiUrl}movie/{movieId}";
-    public static string NowPlayingEndpoint => $"{BaseApiUrl}movie/now_playing";
-    public static string UpcomingEndpoint => $"{BaseApiUrl}movie/upcoming";
+    public static string NowPlayingEndpoint => $"{BaseApiUrl}movie/now_playing?";
+    public static string UpcomingEndpoint => $"{BaseApiUrl}discover/movie?release_date.gte={DateTime.Today.ToString("yyyy-MM-dd")}?";
     
     
-    public static string TrailerKeyByIdEndpoint(int movieId) => $"{BaseApiUrl}movie/{movieId}/videos";
+    public static string TrailerKeyByIdEndpoint(int movieId) => $"{BaseApiUrl}movie/{movieId}/videos?";
     
     public static string PosterByPathEndpoint(string posterPath) => $"{BasePosterUrl}{posterPath}";
     public static string TrailerByKeyEndpoint(string key) => $"{BaseTrailerUrl}{key}";

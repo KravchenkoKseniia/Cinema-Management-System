@@ -8,11 +8,16 @@ namespace Infrastructure.Repositories
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
+        private readonly string _bearerToken;
 
         public TmdbRepository(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _apiKey = configuration["TMDb:ApiKey"] ?? throw new ArgumentNullException("API key is missing!");
+            _bearerToken = configuration["Tmdb:Bearer"] ?? throw new ArgumentNullException("Bearer token is missing!");
+
+            _httpClient.DefaultRequestHeaders.Authorization = 
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _bearerToken);
         }
 
         public async Task<T?> FetchFromTmdbAsync<T>(string path)

@@ -6,7 +6,7 @@ namespace Cinema_System.Services
 {
     public static class TmdbMovieProcessor
     {
-        public static MovieDTO ConvertToMovieDto(MovieSearchItem movie, List<Genre> allGenres, string trailerKey)
+        public static MovieDTO ConvertToMovieDto(MovieSearchItemDTO movie, List<Genre> allGenres, string trailerKey)
         {
             var matchedGenres = allGenres
                 .Where(g => movie.GenreIds.Contains(g.GenreId))
@@ -18,11 +18,11 @@ namespace Cinema_System.Services
                 Title = movie.Title,
                 Description = movie.Overview,
                 TrailerURL = TmdbEndpoints.TrailerByKeyEndpoint(trailerKey),
-                ReleaseDate = movie.ReleaseDate,
+                ReleaseDate = movie.ReleaseDate ?? DateTime.MinValue,
                 Rating = movie.VoteAverage,
-                Duration = movie.Runtime,
+                Duration = TimeSpan.FromMinutes(movie.Runtime),
                 PosterURL = TmdbEndpoints.PosterByPathEndpoint(movie.PosterPath),
-                GenreIds = movie.GenreIds,
+                GenreIds = matchedGenres.Select(g => g.GenreId).ToList(),
                 GenreNames = matchedGenres.Select(g => g.GenreName).ToList()
             };
         }
