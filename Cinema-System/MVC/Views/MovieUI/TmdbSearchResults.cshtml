@@ -1,0 +1,27 @@
+@model Cinema_System.DTOs.MovieSearchResultDTO
+
+<h2>TMDB Search Results</h2>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Import</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var movie in Model.Results)
+    {
+        <tr>
+            <td>@movie.Title</td>
+            <td>@movie.ReleaseDate</td>
+            <td>
+                <form method="post" asp-action="ImportFromTmdb" asp-route-movieId="@movie.Id">
+                    <button type="submit" class="btn btn-success">Import to Database</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
