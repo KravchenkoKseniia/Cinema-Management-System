@@ -1,0 +1,44 @@
+@model IEnumerable<Cinema_System.DTOs.SessionDTO>
+@{
+    ViewData["Title"] = "Sessions";
+}
+
+<h1>Sessions</h1>
+
+<form method="get">
+    <div>
+        <label for="movieName">Movie Name</label>
+        <input type="text" id="movieName" name="movieName" />
+    </div>
+    <div>
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" />
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>Movie Title</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Date</th>
+        <th>Hall</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var session in Model)
+    {
+        <tr>
+            <td>@session.MovieTitle</td>
+            <td>@session.StartTime</td>
+            <td>@session.EndTime</td>
+            <td>@session.Date.ToShortDateString()</td>
+            <td>@session.HallName</td>
+            <td>@session.TicketPrice</td>
+        </tr>
+    }
+    </tbody>
+</table>

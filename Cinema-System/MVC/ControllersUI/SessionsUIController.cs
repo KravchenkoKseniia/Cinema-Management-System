@@ -6,16 +6,51 @@ namespace MVC.ControllersUI;
 public class SessionsUIController : Controller
 {
     private readonly ISessionService _sessionService;
+    private readonly IMovieService _movieService;
     
-    public SessionsUIController(ISessionService sessionService)
+    public SessionsUIController(ISessionService sessionService, IMovieService movieService)
     {
         _sessionService = sessionService;
+        _movieService = movieService;
     }
+
     
-    public IActionResult Index()
+    public IActionResult Index(string? movieName, DateTime? date)
     {
-        var sessions =  _sessionService.GetAllSessions();
-        return View(sessions); //Returns Views/Sessions/Index.cshtml
+        IEnumerable<SessionDTO> sessions;
+
+        if (!string.IsNullOrEmpty(movieName) && date.HasValue)
+        {
+            var movieId = _movieService.GetMovieIdByName(movieName);
+        
+            if (movieId == 0)
+            {
+                return View(new List<SessionDTO>());
+            }
+
+            sessions = _sessionService.GetSessionsByMovieAndDate(movieId, date.Value);
+        }
+        else if (!string.IsNullOrEmpty(movieName))
+        {
+            var movieId = _movieService.GetMovieIdByName(movieName);
+        
+            if (movieId == 0)
+            {
+                return View(new List<SessionDTO>());
+            }
+
+            sessions = _sessionService.GetSessionsByMovie(movieId);
+        }
+        else if (date.HasValue)
+        {
+            sessions = _sessionService.GetSessionsByMovieAndDate(0, date.Value);
+        }
+        else
+        {
+            sessions = _sessionService.GetAllSessions();
+        }
+
+        return View(sessions);
     }
     
     public IActionResult Details(int id)
