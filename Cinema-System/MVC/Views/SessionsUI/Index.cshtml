@@ -4,7 +4,7 @@
 
 @{
     ViewData["Title"] = "Sessions";
-    bool isAdmin = true;
+    bool isAdmin = User.IsInRole("Admin");;
 }
 
 <h1 class="mb-4">Sessions</h1>
