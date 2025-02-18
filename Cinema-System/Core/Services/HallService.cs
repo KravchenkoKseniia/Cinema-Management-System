@@ -25,7 +25,7 @@ public class HallService : IHallService
 
     public HallDTO? GetHallById(int id)
     {
-        var hall = _unitOfWork.Sessions.GetById(id);
+        var hall = _unitOfWork.Halls.GetById(id);
         return hall is null ? null : _mapper.Map<HallDTO>(hall);
     }
 }
