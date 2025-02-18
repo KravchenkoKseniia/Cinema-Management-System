@@ -1,0 +1,26 @@
+@model Cinema_System.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/authentication.css"/>
+</head>
+
+<div class="box">
+    <h1>Cinema KSE</h1>
+
+    <form method="post" asp-action="Login">
+        <input asp-for="UserName" placeholder="Username" type="text" required />
+        <input asp-for="Password" placeholder="Password" type="password" required />
+
+        <button type="submit">Log In</button>
+
+        <div class="error-message">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        </div>
+    </form>
+    <p>Do not have an account? <a asp-action="Register">Sign up here</a></p>
+</div>

@@ -1,0 +1,57 @@
+@model Cinema_System.DTOs.MovieDTO
+
+@{
+    ViewData["Title"] = "Movie Details";
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/movies.css" />
+</head>
+
+<div class="details-container">
+    <!-- Header Navigation -->
+    <div class="header">
+        <div class="logo">Cinema KSE</div>
+        <div class="nav-links">
+            <a href="/sessions">Sessions</a>
+            <a href="/movies/upcoming">Upcoming movies</a>
+            <a href="/tickets">My tickets</a>
+        </div>
+    </div>
+
+    <!-- Movie Details Section -->
+    <div class="movie-details">
+        <div class="poster">
+            <img src="@Model.PosterURL" alt="Poster" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">
+        </div>
+
+        <div class="info">
+            <h2>@Model.Title</h2>
+            <p><strong>Release date:</strong> @Model.ReleaseDate.ToString("yyyy-MM-dd")</p>
+            <p><strong>Duration:</strong> @Model.Duration</p>
+            <p><strong>Genre:</strong> @string.Join(", ", Model.GenreNames)</p>
+            <p><strong>Rating:</strong> @Model.Rating</p>
+            <p><strong>About movie:</strong> @Model.Description</p>
+        </div>
+    </div>
+
+    <!-- Trailer Section -->
+    <h3 style="font-weight:bold; text-align:center; margin-bottom:20px;">Trailer</h3>
+    <div class="trailer">
+        @if (!string.IsNullOrEmpty(Model.TrailerURL))
+        {
+            <iframe
+                width="100%"
+                height="100%"
+                src="@Model.TrailerURL.Replace("watch?v=", "embed/")"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+        }
+        else
+        {
+            <p style="text-align:center;">Trailer not available.</p>
+        }
+    </div>
+</div>

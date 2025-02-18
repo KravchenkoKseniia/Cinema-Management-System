@@ -1,0 +1,61 @@
+@model Cinema_System.DTOs.SessionDTO
+
+@{
+    ViewData["Title"] = "Add Session";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/sessions.css" />
+
+<div class="container">
+    <h1 class="header-title">Cinema KSE</h1>
+
+    <form method="post" class="session-form">
+        <h2 class="form-title">Add session</h2>
+
+        <!-- Movie Title -->
+        <div class="input-group">
+            <label>Movie Title:</label>
+            <input asp-for="MovieTitle" class="input-box" placeholder="Enter movie title" required />
+            <span asp-validation-for="MovieTitle" class="error-text"></span>
+        </div>
+
+        <!-- Date -->
+        <div class="input-group">
+            <label>Date:</label>
+            <input asp-for="Date" type="date" class="input-box" required />
+            <span asp-validation-for="Date" class="error-text"></span>
+        </div>
+
+        <!-- Start Time -->
+        <div class="input-group">
+            <label>Start Time:</label>
+            <input asp-for="StartTime" type="time" class="input-box" required />
+            <span asp-validation-for="StartTime" class="error-text"></span>
+        </div>
+
+        <!-- End Time -->
+        <div class="input-group">
+            <label>End Time:</label>
+            <input asp-for="EndTime" type="time" class="input-box" required />
+            <span asp-validation-for="EndTime" class="error-text"></span>
+        </div>
+
+        <!-- Hall Name -->
+        <div class="input-group">
+            <label>Hall Name:</label>
+            <input asp-for="HallName" class="input-box" placeholder="Enter hall name" required />
+            <span asp-validation-for="HallName" class="error-text"></span>
+        </div>
+
+        <!-- Ticket Price -->
+        <div class="input-group">
+            <label>Ticket Price:</label>
+            <input asp-for="TicketPrice" type="number" step="0.01" class="input-box" placeholder="Enter ticket price" required />
+            <span asp-validation-for="TicketPrice" class="error-text"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</div>
