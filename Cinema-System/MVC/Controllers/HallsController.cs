@@ -18,14 +18,14 @@ public class HallsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetHalls()
     {
-        var halls = await _hallService.GetAllHallsAsync();
+        var halls = _hallService.GetAllHalls();
         return Ok(halls);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetHallById(int id)
     {
-        var hall = await _hallService.GetHallByIdAsync(id);
+        var hall = _hallService.GetHallById(id);
         if (hall == null)
         {
             return NotFound();

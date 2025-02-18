@@ -20,7 +20,9 @@ namespace Cinema_System.Services
         
         public IEnumerable<SessionDTO> GetAllSessions()
         {
-            var sessions = _unitOfWork.Sessions.GetAll();
+            var specification = new AllSessionsSpecification();
+            var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
+
             return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
         }
 
@@ -46,7 +48,33 @@ namespace Cinema_System.Services
 
         public void CreateSession(SessionDTO sessionDto)
         {
-            var session = _mapper.Map<Session>(sessionDto);
+            var movie = _unitOfWork.Movies.GetAll().FirstOrDefault(m => m.Title == sessionDto.MovieTitle);
+            if (movie == null)
+            {
+                Console.WriteLine("Movie with name " + sessionDto.MovieTitle + " does not exist");
+                return;
+            }
+            
+            var hall = _unitOfWork.Halls.GetAll().FirstOrDefault(h => h.Name == sessionDto.HallName);
+            if (hall == null)
+            {
+                Console.WriteLine(sessionDto.HallName + " hall does not exist");
+                return;
+            }
+            
+            sessionDto.HallId = hall.HallId;
+            sessionDto.MovieId = movie.MovieId;
+            
+            var session = new Session
+            {
+                MovieId = sessionDto.MovieId,
+                HallId = sessionDto.HallId,
+                Date = sessionDto.Date,
+                StartTime = sessionDto.StartTime,
+                EndTime = sessionDto.EndTime,
+                TicketPrice = sessionDto.TicketPrice
+            };
+            
             _unitOfWork.Sessions.Insert(session);
             _unitOfWork.Save();
         }

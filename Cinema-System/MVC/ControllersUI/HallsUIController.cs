@@ -16,13 +16,13 @@ public class HallsUIController : Controller
     
     public async Task<IActionResult> Index()
     {
-        var halls = await _hallService.GetAllHallsAsync();
+        var halls = _hallService.GetAllHalls();
         return View(halls); //Returns Views/Halls/Index.cshtml
     }
     
     public async Task<IActionResult> Details(int id)
     {
-        var hall = await _hallService.GetHallByIdAsync(id);
+        var hall = _hallService.GetHallById(id);
         if (hall == null)
         {
             return NotFound();
