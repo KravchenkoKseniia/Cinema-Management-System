@@ -17,7 +17,7 @@ public class AuthorizationUIController : Controller
         _signInManager = signInManager;
     }
 
-    [HttpGet("login")]
+    [HttpGet]
     public IActionResult Login()
     {
         return View(); //Returns Views/Authorization/Login.cshtml
@@ -29,9 +29,9 @@ public class AuthorizationUIController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        if (model.UserName == "admin" && model.Password == "password")
+        if (model.UserName == "admin" && model.Password == "passwordPassword123@@@")
         {
-            return RedirectToAction("Index", "AdminView");
+            return RedirectToAction("Index", "SessionsUI");
         }
         var result = _authService.Login(model.UserName, model.Password);
         if (result == "Login successful!")
@@ -41,7 +41,7 @@ public class AuthorizationUIController : Controller
         return View(model); //Returns Views/Authorization/Login.cshtml
     }
 
-    [HttpGet("signup")]
+    [HttpGet]
     public IActionResult Register()
     {
         return View(); //Returns Views/Authorization/Register.cshtml
