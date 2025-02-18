@@ -1,57 +1,71 @@
 @model IEnumerable<Cinema_System.DTOs.SessionDTO>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Sessions";
+    bool isAdmin = User.IsInRole("Admin");;
 }
 
-<h1 class="text-center my-4">Sessions</h1>
+<h1 class="mb-4">Sessions</h1>
 
-<div class="container">
-    <form method="get" class="mb-4 p-4 border rounded shadow-sm bg-light">
-        <div class="row g-3">
-            <div class="col-md-8">
-                <label for="movieName" class="form-label fw-bold">Movie Name</label>
-                <input type="text" id="movieName" name="movieName" class="form-control" placeholder="Enter movie name" />
-            </div>
-            <div class="col-md-4">
-                <label for="date" class="form-label fw-bold">Date</label>
-                <input type="date" id="date" name="date" class="form-control" />
-            </div>
+<!-- Search Form -->
+<form method="get" class="mb-4">
+    <div class="row g-3 align-items-center">
+        <div class="col-md-4">
+            <label for="movieName" class="form-label">Movie Name</label>
+            <input type="text" id="movieName" name="movieName" class="form-control"/>
         </div>
-        <div class="text-center mt-3">
-            <button type="submit" class="btn w-100 text-white" style="background-color: #d63384;">Search</button>
+        <div class="col-md-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" id="date" name="date" class="form-control"/>
         </div>
-    </form>
+        <div class="col-md-2">
+            <button type="submit" class="btn text-white" style="background-color: #d63384; margin-top: 32px;">Search</button>
+        </div>
+    </div>
+</form>
 
-    @if (!Model.Any())
+@if (isAdmin)
+{
+    <a asp-action="Create" class="btn btn-success mb-3">Create Session</a>
+}
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>Movie Title</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Date</th>
+        <th>Hall</th>
+        <th>Price</th>
+        @if (isAdmin)
+        {
+            <th>Actions</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var session in Model)
     {
-        <div class="alert alert-warning text-center">No sessions found.</div>
+        <tr>
+            <td>@session.MovieTitle</td>
+            <td>@session.StartTime</td>
+            <td>@session.EndTime</td>
+            <td>@session.Date.ToShortDateString()</td>
+            <td>@session.HallName</td>
+            <td>@session.TicketPrice.ToString("C")</td>
+            @if (isAdmin)
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@session.SessionId" class="btn btn-warning btn-sm">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@session.SessionId" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            }
+        </tr>
     }
-    else
-    {
-        <table class="table table-striped table-bordered shadow-sm">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>Movie Title</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Date</th>
-                    <th>Hall</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var session in Model)
-                {
-                    <tr>
-                        <td>@session.MovieTitle</td>
-                        <td>@session.StartTime.ToString("HH:mm")</td>
-                        <td>@session.EndTime.ToString("HH:mm")</td>
-                        <td>@session.Date.ToShortDateString()</td>
-                        <td>@session.HallName</td>
-                        <td>$@session.TicketPrice</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-</div>
+    </tbody>
+</table>
