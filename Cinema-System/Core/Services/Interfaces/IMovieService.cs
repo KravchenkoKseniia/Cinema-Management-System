@@ -9,5 +9,6 @@ namespace Cinema_System.Services.Interfaces
         void CreateMovie(MovieDTO movieDto);
         void UpdateMovie(MovieDTO movieDto);
         void DeleteMovie(int id);
+        public int GetMovieIdByName(string movieName);
     }
 }

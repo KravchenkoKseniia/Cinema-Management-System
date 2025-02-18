@@ -1,11 +1,12 @@
 using Cinema_System.Constants;
 using Cinema_System.DTOs;
+using Cinema_System.Services.Interfaces;
 using Infrastructure.Entities.Specifications;
 using Infrastructure.Interfaces;
 
 namespace Cinema_System.Services
 {
-    public class TmdbService
+    public class TmdbService : ITmdbService
     {
         private readonly ITmdbRepository _tmdbRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -16,30 +17,30 @@ namespace Cinema_System.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<MovieSearchResult?> SearchMoviesByTitleAsync(string title)
+        public async Task<MovieSearchResultDTO?> SearchMoviesByTitleAsync(string title)
         {
-            return await _tmdbRepository.FetchFromTmdbAsync<MovieSearchResult>(
+            return await _tmdbRepository.FetchFromTmdbAsync<MovieSearchResultDTO>(
                 TmdbEndpoints.SearchByTitleEndpoint(title)
             );
         }
 
-        public async Task<MovieSearchResult?> GetNowPlayingMoviesAsync()
+        public async Task<MovieSearchResultDTO?> GetNowPlayingMoviesAsync()
         {
-            return await _tmdbRepository.FetchFromTmdbAsync<MovieSearchResult>(
+            return await _tmdbRepository.FetchFromTmdbAsync<MovieSearchResultDTO>(
                 TmdbEndpoints.NowPlayingEndpoint
             );
         }
 
-        public async Task<MovieSearchResult?> GetUpcomingMoviesAsync()
+        public async Task<MovieSearchResultDTO?> GetUpcomingMoviesAsync()
         {
-            return await _tmdbRepository.FetchFromTmdbAsync<MovieSearchResult>(
+            return await _tmdbRepository.FetchFromTmdbAsync<MovieSearchResultDTO>(
                 TmdbEndpoints.UpcomingEndpoint
             );
         }
 
         public async Task<MovieDTO?> FetchMovieFromTmdbByIdAsync(int movieId)
         {
-            var movie = await _tmdbRepository.FetchFromTmdbAsync<MovieSearchItem>(
+            var movie = await _tmdbRepository.FetchFromTmdbAsync<MovieSearchItemDTO>(
                 TmdbEndpoints.DetailsByIdEndpoint(movieId)
             );
 

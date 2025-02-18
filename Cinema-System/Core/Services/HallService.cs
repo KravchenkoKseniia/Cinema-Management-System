@@ -1,3 +1,5 @@
+using AutoMapper;
+using Cinema_System.DTOs;
 using Infrastructure.Entities;
 using Infrastructure.Interfaces;
 using Cinema_System.Services.Interfaces;
@@ -6,19 +8,24 @@ namespace Cinema_System.Services;
 public class HallService : IHallService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public HallService(IUnitOfWork unitOfWork)
+    public HallService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Hall>> GetAllHallsAsync()
+    public IEnumerable<HallDTO> GetAllHalls()
     {
-        return await Task.FromResult(_unitOfWork.Halls.GetAll());
+        var halls = _unitOfWork.Halls.GetAll();
+        return _mapper.Map<IEnumerable<HallDTO>>(halls);
     }
 
-    public async Task<Hall?> GetHallByIdAsync(int id)
+
+    public HallDTO? GetHallById(int id)
     {
-        return await Task.FromResult(_unitOfWork.Halls.GetById(id));
+        var hall = _unitOfWork.Sessions.GetById(id);
+        return hall is null ? null : _mapper.Map<HallDTO>(hall);
     }
 }

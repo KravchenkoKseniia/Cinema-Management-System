@@ -1,0 +1,108 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9d3d3;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Container */
+.container {
+    background-color: #fce0e0;
+    border-radius: 20px;
+    padding: 30px;
+    width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Titles */
+.header-title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.form-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+    background-color: #fff;
+}
+
+.input-box:focus {
+    outline: none;
+    border-color: #333;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* Error Text */
+.error-text {
+    color: #e74c3c;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Submit Button */
+.submit-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #444;
+}
+
+/* Back Link */
+.back-link {
+    margin-top: 20px;
+}
+
+.link {
+    color: #000;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

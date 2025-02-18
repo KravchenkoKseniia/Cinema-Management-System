@@ -51,5 +51,19 @@ namespace Cinema_System.Services
             _unitOfWork.Movies.Delete(id);
             _unitOfWork.Save();
         }
+        
+        public int GetMovieIdByName(string movieName)
+        {
+            var movie = _unitOfWork.Movies.GetAll().FirstOrDefault(m => m.Title.Equals(movieName, StringComparison.OrdinalIgnoreCase));
+    
+            if (movie == null)
+            {
+                return 0;
+            }
+    
+            return movie.MovieId;
+        }
+
+
     }
 }

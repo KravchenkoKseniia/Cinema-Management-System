@@ -1,12 +1,13 @@
 using System.Text.Json.Serialization;
 
+namespace Cinema_System.DTOs;
 
-public class MovieSearchResult
+public class MovieSearchResultDTO
 {
-    public List<MovieSearchItem> Results { get; set; } = new List<MovieSearchItem>();
+    public List<MovieSearchItemDTO> Results { get; set; } = new List<MovieSearchItemDTO>();
 }
 
-public class MovieSearchItem
+public class MovieSearchItemDTO
 {
     [JsonPropertyName("id")]
     public int Id { get; set; }
@@ -18,13 +19,16 @@ public class MovieSearchItem
     public string Overview { get; set; } = null!;
     
     [JsonPropertyName("release_date")]
-    public DateTime ReleaseDate { get; set; }
+    public string ReleaseDateString { get; set; } = null!;
+    
+    [JsonIgnore]
+    public DateTime? ReleaseDate => DateTime.TryParse(ReleaseDateString, out var date) ? date : (DateTime?)null;
     
     [JsonPropertyName("vote_average")]
     public decimal VoteAverage { get; set; }
     
     [JsonPropertyName("runtime")]
-    public TimeSpan Runtime { get; set; }
+    public int Runtime { get; set; }
     
     [JsonPropertyName("poster_path")]
     public string PosterPath { get; set; } = null!;

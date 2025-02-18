@@ -1,0 +1,34 @@
+@model IEnumerable<Cinema_System.DTOs.TicketDTO>
+
+@{
+    ViewData["Title"] = "My Tickets";
+}
+
+<h2 class="text-center">My Booked Tickets</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted text-center">You have no booked tickets yet.</p>
+}
+else
+{
+    <div class="container mt-4">
+        <div class="row">
+            @foreach (var ticket in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Session: @ticket.SessionDate.ToShortDateString() at @ticket.SessionStartTime</h5>
+                            <p class="card-text"><strong>Hall:</strong> @ticket.HallName</p>
+                            <p class="card-text"><strong>Seat Row:</strong> @ticket.SeatRow</p>
+                            <p class="card-text"><strong>Price:</strong> $@ticket.TicketPrice</p>
+                            <p class="card-text"><strong>Payment ID:</strong> @ticket.PaymentId</p>
+                            <p class="card-text"><strong>Total Paid:</strong> $@ticket.PaymentAmount</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

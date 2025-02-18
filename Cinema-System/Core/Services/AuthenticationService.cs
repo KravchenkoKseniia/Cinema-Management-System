@@ -20,23 +20,23 @@ namespace Cinema_System.Services
             _roleManager = roleManager;
         }
         
-        public string Register(string userName, string password, string role)
+        public string Register(string userName, string password, string email, string role)
         {
+            var roleEntity = _roleManager.FindByNameAsync(role).Result;
+            if (roleEntity == null)
+                return $"Role '{role}' does not exist!";
+            
             var user = new User
             {
-                UserName = userName
+                UserName = userName,
+                Email = email,
+                RoleId = roleEntity.Id
             };
 
             var result = _userManager.CreateAsync(user, password).Result;
             if (result.Succeeded)
             {
-                var roleExists = _roleManager.RoleExistsAsync(role).Result;
-                if (roleExists)
-                {
-                    _userManager.AddToRoleAsync(user, role).Wait();
-                    return "Registration successful!";
-                }
-                return "Role does not exist.";
+                return "Registration successful!";
             }
 
             return string.Join(", ", result.Errors.Select(e => e.Description));

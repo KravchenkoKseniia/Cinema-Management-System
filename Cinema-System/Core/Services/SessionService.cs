@@ -20,7 +20,9 @@ namespace Cinema_System.Services
         
         public IEnumerable<SessionDTO> GetAllSessions()
         {
-            var sessions = _unitOfWork.Sessions.GetAll();
+            var specification = new AllSessionsSpecification();
+            var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
+
             return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
         }
 
@@ -41,12 +43,47 @@ namespace Cinema_System.Services
         public SessionDTO? GetSessionById(int sessionId)
         {
             var session = _unitOfWork.Sessions.GetById(sessionId);
-            return session is null ? null : _mapper.Map<SessionDTO>(session);
+            if (session is null) return null;
+
+            var movie = _unitOfWork.Movies.GetById(session.MovieId);
+            var hall = _unitOfWork.Halls.GetById(session.HallId);
+
+            var sessionDto = _mapper.Map<SessionDTO>(session);
+            sessionDto.MovieTitle = movie?.Title ?? "Unknown Movie";
+            sessionDto.HallName = hall?.Name ?? "Unknown Hall";
+
+            return sessionDto;
         }
 
         public void CreateSession(SessionDTO sessionDto)
         {
-            var session = _mapper.Map<Session>(sessionDto);
+            var movie = _unitOfWork.Movies.GetAll().FirstOrDefault(m => m.Title == sessionDto.MovieTitle);
+            if (movie == null)
+            {
+                Console.WriteLine("Movie with name " + sessionDto.MovieTitle + " does not exist");
+                return;
+            }
+            
+            var hall = _unitOfWork.Halls.GetAll().FirstOrDefault(h => h.Name == sessionDto.HallName);
+            if (hall == null)
+            {
+                Console.WriteLine(sessionDto.HallName + " hall does not exist");
+                return;
+            }
+            
+            sessionDto.HallId = hall.HallId;
+            sessionDto.MovieId = movie.MovieId;
+            
+            var session = new Session
+            {
+                MovieId = sessionDto.MovieId,
+                HallId = sessionDto.HallId,
+                Date = sessionDto.Date,
+                StartTime = sessionDto.StartTime,
+                EndTime = sessionDto.EndTime,
+                TicketPrice = sessionDto.TicketPrice
+            };
+            
             _unitOfWork.Sessions.Insert(session);
             _unitOfWork.Save();
         }
@@ -54,13 +91,16 @@ namespace Cinema_System.Services
         public void UpdateSession(SessionDTO sessionDto)
         {
             var session = _unitOfWork.Sessions.GetById(sessionDto.SessionId);
-            if (session is null) return;
+            if (session == null) return;
+            
+            session.Date = sessionDto.Date;
+            session.StartTime = sessionDto.StartTime;
+            session.EndTime = sessionDto.EndTime;
+            session.TicketPrice = sessionDto.TicketPrice;
 
-            _mapper.Map(sessionDto, session);
             _unitOfWork.Sessions.Update(session);
             _unitOfWork.Save();
         }
-
         public void DeleteSession(int sessionId)
         {
             _unitOfWork.Sessions.Delete(sessionId);
