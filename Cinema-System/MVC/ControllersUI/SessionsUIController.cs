@@ -83,4 +83,12 @@ public class SessionsUIController : Controller
         ViewBag.Halls = new SelectList(_hallService.GetAllHalls(), "HallId", "Name", sessionDto.HallId);
         return View(sessionDto);
     }
+    
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        _sessionService.DeleteSession(id);
+        return RedirectToAction(nameof(Index));
+    }
+    
 }
