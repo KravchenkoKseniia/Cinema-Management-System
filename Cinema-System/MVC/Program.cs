@@ -1,3 +1,4 @@
+using Cinema_System.Mapping;
 using Cinema_System.Services;
 using Cinema_System.Services.Interfaces;
 using Infrastructure.Data;
@@ -29,6 +30,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 // Register your custom services.
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>(); 
