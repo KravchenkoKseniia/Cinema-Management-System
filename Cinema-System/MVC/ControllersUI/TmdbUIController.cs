@@ -1,14 +1,15 @@
 using Cinema_System.Services;
+using Cinema_System.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.ControllersUI;
 
-[Route("tmdb")]
+
 public class TmdbUIController : Controller
 {
-    private readonly TmdbService _tmdbService;
+    private readonly ITmdbService _tmdbService;
 
-    public TmdbUIController(TmdbService tmdbService)
+    public TmdbUIController(ITmdbService tmdbService)
     {
         _tmdbService = tmdbService;
     }
