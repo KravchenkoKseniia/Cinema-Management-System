@@ -1,0 +1,21 @@
+@model Cinema_System.DTOs.MovieSearchResultDTO
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2 class="text-center mb-4 font-bold text-2xl">Search Results</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    @foreach (var movie in Model.Results)
+    {
+        <div class="border rounded-lg overflow-hidden shadow-md flex flex-col">
+            <img src="@($"https://image.tmdb.org/t/p/w200{movie.PosterPath}")" alt="@movie.Title" class="w-full h-64 object-cover">
+
+            <div class="p-4 flex-grow">
+                <h3 class="text-lg font-semibold">@movie.Title</h3>
+                <p class="text-sm text-gray-600">Release Date: @movie.ReleaseDate?.ToString("yyyy-MM-dd")</p>
+                <p class="text-sm text-gray-700">@movie.Overview</p>
+            </div>
+        </div>
+    }
+</div>
