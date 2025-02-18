@@ -43,7 +43,16 @@ namespace Cinema_System.Services
         public SessionDTO? GetSessionById(int sessionId)
         {
             var session = _unitOfWork.Sessions.GetById(sessionId);
-            return session is null ? null : _mapper.Map<SessionDTO>(session);
+            if (session is null) return null;
+
+            var movie = _unitOfWork.Movies.GetById(session.MovieId);
+            var hall = _unitOfWork.Halls.GetById(session.HallId);
+
+            var sessionDto = _mapper.Map<SessionDTO>(session);
+            sessionDto.MovieTitle = movie?.Title ?? "Unknown Movie";
+            sessionDto.HallName = hall?.Name ?? "Unknown Hall";
+
+            return sessionDto;
         }
 
         public void CreateSession(SessionDTO sessionDto)
@@ -82,13 +91,16 @@ namespace Cinema_System.Services
         public void UpdateSession(SessionDTO sessionDto)
         {
             var session = _unitOfWork.Sessions.GetById(sessionDto.SessionId);
-            if (session is null) return;
+            if (session == null) return;
+            
+            session.Date = sessionDto.Date;
+            session.StartTime = sessionDto.StartTime;
+            session.EndTime = sessionDto.EndTime;
+            session.TicketPrice = sessionDto.TicketPrice;
 
-            _mapper.Map(sessionDto, session);
             _unitOfWork.Sessions.Update(session);
             _unitOfWork.Save();
         }
-
         public void DeleteSession(int sessionId)
         {
             _unitOfWork.Sessions.Delete(sessionId);

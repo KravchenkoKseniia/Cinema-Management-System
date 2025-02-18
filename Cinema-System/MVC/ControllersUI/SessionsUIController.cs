@@ -91,4 +91,40 @@ public class SessionsUIController : Controller
         return RedirectToAction(nameof(Index));
     }
     
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var session = _sessionService.GetSessionById(id);
+        if (session == null)
+        {
+            return NotFound();
+        }
+        
+        var movie = _movieService.GetMovieById(session.MovieId);
+        var hall = _hallService.GetHallById(session.HallId);
+
+        var sessionDto = new SessionDTO
+        {
+            SessionId = session.SessionId,
+            MovieId = session.MovieId,
+            MovieTitle = movie?.Title ?? "Unknown",
+            HallId = session.HallId,
+            HallName = hall?.Name ?? "Unknown",
+            Date = session.Date,
+            StartTime = session.StartTime,
+            EndTime = session.EndTime,
+            TicketPrice = session.TicketPrice
+        };
+
+        return View(sessionDto);
+    }
+
+
+    
+    [HttpPost]
+    public IActionResult Edit(SessionDTO sessionDto)
+    {
+        _sessionService.UpdateSession(sessionDto);
+        return RedirectToAction(nameof(Index));
+    }
 }
