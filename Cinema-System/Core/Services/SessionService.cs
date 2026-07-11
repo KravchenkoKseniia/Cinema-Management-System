@@ -36,6 +36,7 @@ namespace Cinema_System.Services
         public IEnumerable<SessionDTO> GetSessionsByMovie(int movieId)
         {
             var specification = new SessionsByMovieSpecification(movieId);
+            // var specification = new AllSessionsSpecification(); // mutant
             var sessions = _unitOfWork.Sessions.GetListBySpec(specification);
             return _mapper.Map<IEnumerable<SessionDTO>>(sessions);
         }
