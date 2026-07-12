@@ -96,3 +96,7 @@ static async Task SeedRolesAsync(RoleManager<Role> roleManager)
     }
 }
 
+public partial class Program
+{
+}
+
