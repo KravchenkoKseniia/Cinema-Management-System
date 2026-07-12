@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  db:
+    image: mysql:8.0
+    container_name: some-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: Cinema
+    ports:
+      - "3307:3306"
