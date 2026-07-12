@@ -18,8 +18,8 @@ public class AvailableSeatsSpecificationTests
 
         var tickets = new List<Ticket>
         {
-            new Ticket { TicketId = 1, SessionId = sessionId, PaymentId = null },
-            new Ticket { TicketId = 2, SessionId = sessionId, PaymentId = null }
+            new Ticket { TicketId = 1, SessionId = sessionId, PaymentId = 0 },
+            new Ticket { TicketId = 2, SessionId = sessionId, PaymentId = 0 }
         };
 
         // Act
@@ -42,7 +42,7 @@ public class AvailableSeatsSpecificationTests
         var tickets = new List<Ticket>
         {
             new Ticket { TicketId = 1, SessionId = sessionId, PaymentId = 99 }, // Already paid
-            new Ticket { TicketId = 2, SessionId = sessionId, PaymentId = null } // Available
+            new Ticket { TicketId = 2, SessionId = sessionId, PaymentId = 0 } // Available (unpaid = 0)
         };
 
         // Act
@@ -51,7 +51,7 @@ public class AvailableSeatsSpecificationTests
 
         // Assert
         var filteredTicket = result.Should().ContainSingle().Subject;
-        filteredTicket.PaymentId.Should().BeNull();
+        filteredTicket.PaymentId.Should().Be(0);
         filteredTicket.TicketId.Should().Be(2);
     }
 
@@ -65,8 +65,8 @@ public class AvailableSeatsSpecificationTests
 
         var tickets = new List<Ticket>
         {
-            new Ticket { TicketId = 1, SessionId = targetSessionId, PaymentId = null },
-            new Ticket { TicketId = 2, SessionId = otherSessionId, PaymentId = null } // Right status, wrong session
+            new Ticket { TicketId = 1, SessionId = targetSessionId, PaymentId = 0 },
+            new Ticket { TicketId = 2, SessionId = otherSessionId, PaymentId = 0 } // Right status, wrong session
         };
 
         // Act

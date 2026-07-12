@@ -115,6 +115,10 @@ _TeamCity*
 *.coverage
 *.coveragexml
 
+# ReportGenerator coverage report - ignore everything except the summary index.html
+CinemaSystem.Test/coveragereport/*
+!CinemaSystem.Test/coveragereport/index.html
+
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml
